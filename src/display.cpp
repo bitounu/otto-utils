@@ -43,7 +43,7 @@ void Display::draw(const std::function<void()> userDraw) const {
 
   // NOTE(ryan): Apply a circular mask to simulate a round display. We may want to move this to
   // stak-sdk so that the mask is enforced.
-  fillMask(bounds);
+  clearMask(bounds);
   beginPath();
   circle(48.0f, 48.0f, 48.0f);
   beginMask();
