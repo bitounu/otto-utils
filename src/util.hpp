@@ -18,6 +18,8 @@ float mapUnit(float x, float imin, float imax);
 float mapClamp(float x, float imin, float imax, float omin, float omax);
 float mapUnitClamp(float x, float imin, float imax);
 
+float clamp(float x, float omin, float omax);
+
 struct AngularParticle {
   float angle = 0.0f;
   float anglePrev = angle;

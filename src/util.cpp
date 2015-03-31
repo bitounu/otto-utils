@@ -35,6 +35,10 @@ float mapUnitClamp(float x, float imin, float imax) {
   return std::max(0.0f, std::min(1.0f, mapUnit(x, imin, imax)));
 }
 
+float clamp(float x, float omin, float omax) {
+  return std::min(omax, std::max(omin, x));
+}
+
 void AngularParticle::step() {
   auto vel = (angle - anglePrev) * (1.0f - friction);
 
