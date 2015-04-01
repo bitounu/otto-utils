@@ -51,11 +51,17 @@ void Display::draw(const std::function<void()> userDraw) const {
   endMask();
   enableMask();
 
-  enableColorTransform();
-  setColorTransform(vec4(vec3(brightness()), 1.0f), vec4(0.0f));
+  {
+    ScopedTransform xf;
+    ScopedMask mask(bounds.size);
+    userDraw();
+  }
 
-  ScopedMask mask(bounds.size);
-  userDraw();
+  // NOTE(ryan): Draw a full screen black rectangle to simulate screen brightness.
+  beginPath();
+  rect(0.0f, 0.0f, 96.0f, 96.0f);
+  fillColor(0.0f, 0.0f, 0.0f, 1.0f - brightness());
+  fill();
 }
 
 } // otto
