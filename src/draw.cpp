@@ -33,4 +33,22 @@ void drawProgressArc(const Display &display, float progress) {
   fill();
 }
 
+void fillTextCenteredWithSuffix(const std::string &text, const std::string &suffix, float textSize,
+                                float suffixSize) {
+  ScopedTransform xf;
+
+  fontSize(textSize);
+  auto textBounds = getTextBounds(text);
+  fontSize(suffixSize);
+  auto suffixBounds = getTextBounds(suffix);
+
+  textAlign(ALIGN_LEFT | ALIGN_BASELINE);
+  translate(-0.5f * (textBounds.size.x + suffixBounds.size.x), 0);
+  fontSize(textSize);
+  fillText(text);
+  translate(textBounds.size.x, 0);
+  fontSize(suffixSize);
+  fillText(suffix);
+}
+
 } // otto
