@@ -9,7 +9,7 @@ void Display::sleep() {
       .then<RampTo>(0.5f, 2.0f, EaseInOutQuad())
       .then<Hold>(0.5f, sleepDelay - daydreamDelay)
       .then<RampTo>(0.0f, 2.0f, EaseInQuad())
-      .finishFn([this](ch::Motion<float> &m) { isSleeping = true; });
+      .finishFn([this](ch::Motion<float> &m) { sleepNextFrame = true; });
 }
 
 bool Display::wake() {
@@ -22,7 +22,7 @@ bool Display::wake() {
   sleepTimeout = timeline.cue([this] { sleep(); }, daydreamDelay).getControl();
 
   auto wasSleeping = isSleeping;
-  isSleeping = false;
+  isSleeping = sleepNextFrame = false;
 
   return wasSleeping;
 }
@@ -31,13 +31,21 @@ void Display::update(const std::function<void()> userUpdate) {
   if (!isSleeping) userUpdate();
 }
 
-void Display::draw(const std::function<void()> userDraw) const {
+void Display::draw(const std::function<void()> userDraw) {
   static const mat3 defaultMatrix = { 0.0, -1.0, 0.0, 1.0, -0.0, 0.0, 0.0, bounds.size.y, 1.0 };
 
   if (isSleeping) return;
 
   clearColor(vec3(0.0f));
   clear(bounds);
+
+  // NOTE(ryan): This 2-stage sleep is here so that the frame right after sleep has a chance to
+  // clear to black, and after that the loop does not draw to the display at all.
+  if (sleepNextFrame) {
+    sleepNextFrame = false;
+    isSleeping = true;
+    return;
+  }
 
   setTransform(defaultMatrix);
 

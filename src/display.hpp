@@ -16,6 +16,7 @@ struct Display {
   ch::Output<float> brightness = 1.0f;
 
   ch::TimelineItemControlRef sleepTimeout;
+  bool sleepNextFrame = false;
   bool isSleeping = false;
 
   Rect bounds;
@@ -24,7 +25,7 @@ struct Display {
   bool wake();
 
   void update(const std::function<void()> userUpdate);
-  void draw(const std::function<void()> userDraw) const;
+  void draw(const std::function<void()> userDraw);
 };
 
 } // otto
