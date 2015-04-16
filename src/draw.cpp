@@ -1,6 +1,6 @@
 #include "draw.hpp"
 #include "math.hpp"
-#include "gfx.hpp"
+#include "otto-gfx/gfx.hpp"
 #include "display.hpp"
 
 #include "gtx/rotate_vector.hpp"
