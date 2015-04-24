@@ -3,7 +3,7 @@
 #include "otto-gfx/gfx.hpp"
 #include "display.hpp"
 
-#include "gtx/rotate_vector.hpp"
+#include <glm/gtx/rotate_vector.hpp>
 
 namespace otto {
 
