@@ -25,7 +25,7 @@ std::pair<std::string, std::string> formatMebibytes(uint64_t bytes) {
   static const std::string suffixes[] = { "B", "KiB", "MiB", "GiB" };
   uint64_t place = std::log(static_cast<double>(bytes)) / std::log(1024.0);
   double units = bytes / std::pow(1024.0, place);
-  return { formatNumber(units, 1), suffixes[std::min(place, 3ull)] };
+  return { formatNumber(units, 1), suffixes[std::min<uint64_t>(place, 3)] };
 }
 
 static const double MS_TO_HRS  = 1.0 / (60.0 * 60.0 * 1000.0);
